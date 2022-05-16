@@ -7,11 +7,11 @@ To use this code you must have the required packages installed to install these 
 `bash
 pip install -r requirements.txt
 `
+
 Once the packages are installed run the code using
 
 `bash
 python3 Client.py
-
 python3 Server.py
 `
 
