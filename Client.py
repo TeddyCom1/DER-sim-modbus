@@ -29,6 +29,7 @@ import sys
 # configure the client #logging
 # --------------------------------------------------------------------------- #
 import logging
+import time
 # FORMAT = ('%(asctime)-15s %(threadName)-15s '
 #           '%(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
 # #logging.basicConfig(format=FORMAT)
@@ -44,15 +45,24 @@ Predefined list of slave devices
 0x04 load 1
 '''
 slaves = [0x01,0x02,0x03,0x04]
-slave_sm = [0x01, 0x02,0x03]
+slave_sm = [0x01,0x02,0x03]
+
 SM_1 = 0x01
 SM_2 = 0x02
 SM_3 = 0x03
 LD_1 = 0x04
 
 
+BURP = 5021
+
 def run_sync_client():
-    client = ModbusClient('localhost', port=5020)
+    try:
+        if sys.argv[1] == 'y':
+            client = ModbusClient('localhost', port=BURP)
+        else:
+            client = ModbusClient('localhost', port=5020)
+    except:
+        client = ModbusClient('localhost', port=5020)
     # from pymodbus.transaction import ModbusRtuFramer
     # client = ModbusClient('localhost', port=5020, framer=ModbusRtuFramer)
     # client = ModbusClient(method='binary', port='/dev/ptyp0', timeout=1)
@@ -67,6 +77,7 @@ def run_sync_client():
     try:
         power_required = 0
         while(True):
+            time.sleep(0.5)
             if(client.read_coils(0,1,unit=LD_1).bits[0]):
                 power_required = client.read_holding_registers(0, 1, unit=LD_1).registers[0]
                 client.write_coils(0, [False], unit=LD_1)
@@ -89,9 +100,6 @@ def run_sync_client():
     except:
         print('Killing Master device')
         client.close()
-
-
-
 
 if __name__ == "__main__":
     run_sync_client()

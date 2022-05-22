@@ -112,7 +112,6 @@ class DER_Load(Thread):
     def turn_off(self):
         self.status = False
 
-    
     '''
     Changes first coil value to true to establish that the load value has changed
     '''
