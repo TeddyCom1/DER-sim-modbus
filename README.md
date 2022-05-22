@@ -1,5 +1,11 @@
 # DER-sim-modbus
-Simulation of DER system using modbus communication
+Simulation of a DER system using modbus communication
+
+These scripts attempt to simulate a small component of the DER architecture, mainly the communication between the DERMS and DER devices using the modbus communication protocol
+
+The code contained in Server.py contains the code required to simulate 3 DER smart meters in seperate threads and 1 load device simulating the power network load requirements
+
+The code contained in client.py simulates the DERMS device, sequentially telling DER devices to either provide more or less power depending on the requirements sent by the load.
 
 # Usage:
 
