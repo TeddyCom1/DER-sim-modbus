@@ -26,6 +26,7 @@ in 2 seperate terminals, they will output the logs of whats being sent between t
 To use mangled_burp.py you need to install burpsuite with and extension
 
 To download burpsuite: https://portswigger.net/burp/communitydownload
+
 To download burpsuite extension: https://github.com/summitt/Burp-Non-HTTP-Extension
 
 BurpSuite is a tool used to intercept network communication between devices, in which you can modify these communication to resemble how you like
