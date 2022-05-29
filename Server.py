@@ -248,7 +248,11 @@ def run_server():
     try:
         print('Starting TCP Modbus slave server')
         StartTcpServer(context, identity=identity, address=("", 5020))
-    except:
+        StartTlsServer(context, identity=identity, certfile="server.crt",
+                   keyfile="server.key", address=("0.0.0.0", 8020))
+        
+    except Exception as e:
+        print(e)
         print('Closing Modbus slave server')
         smart_meter.turn_off()
         smart_meter1.turn_off()
@@ -261,8 +265,7 @@ def run_server():
     #                framer=ModbusRtuFramer, address=("0.0.0.0", 5020))
 
     # TLS
-    # StartTlsServer(context, identity=identity, certfile="server.crt",
-    #                keyfile="server.key", address=("0.0.0.0", 8020))
+    
 
     # Udp:
     # StartUdpServer(context, identity=identity, address=("0.0.0.0", 5020))

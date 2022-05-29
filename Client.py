@@ -59,9 +59,12 @@ def run_sync_client():
     try:
         if sys.argv[1] == 'y':
             client = ModbusClient('localhost', port=BURP)
+        elif sys.argv[1] == 'tls':
+            client = ModbusClient('localhost', port=8020)
         else:
             client = ModbusClient('localhost', port=5020)
-    except:
+    except Exception as e:
+        print(e)
         client = ModbusClient('localhost', port=5020)
     # from pymodbus.transaction import ModbusRtuFramer
     # client = ModbusClient('localhost', port=5020, framer=ModbusRtuFramer)
@@ -78,6 +81,7 @@ def run_sync_client():
         power_required = 0
         while(True):
             time.sleep(0.5)
+            print(client.read_coils(0,1,unit=LD_1))
             if(client.read_coils(0,1,unit=LD_1).bits[0]):
                 power_required = client.read_holding_registers(0, 1, unit=LD_1).registers[0]
                 client.write_coils(0, [False], unit=LD_1)
@@ -97,7 +101,8 @@ def run_sync_client():
                         client.write_coil(0, True, unit=i)
                         print('Changed SM' + str(i) + ' Production to: ' + str(temp) + 'KW')
                         temp = 0
-    except:
+    except Exception as e:
+        print(e)
         print('Killing Master device')
         client.close()
 
